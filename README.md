@@ -50,36 +50,34 @@ This application allows users to input their CV text and, with the click of a bu
 ### Installation
 
 1. **Clone the repository**:
-   ```bash
-   git clone https://github.com/yourusername/cv-summary-app.git
-   cd cv-summary-app
+   
+``   git clone https://github.com/gocallum/gencvsummary.git
+   cd cv-summary-app``
 
 # Install dependencies:
 
-bash
-Copy code
-npm install
-Start the development server:
+`npm install
+`
+# Start the development server:
 
-bash
-Copy code
-npm run dev
-Open your browser:
+`npm run dev`
+
+# Open your browser:
+
 Navigate to http://localhost:3000 to see the app in action.
 
-Configuration
-API Endpoint
+
+## Configuration
+# API Endpoint
+
 To configure the API endpoint dynamically instead of hard-coding it into the application, follow these steps:
 
 Create a configuration file: Create a .env.local file in the root directory of your project.
 
-Add the API endpoint to the configuration file:
+# Add the API endpoint to the configuration file:
 
-`` bash
 
 NEXT_PUBLIC_API_ENDPOINT=https://unnw2h2x8g.execute-api.ap-southeast-2.amazonaws.com/default/GenerateCVSummary
-Modify the API call in your CVForm component:
-`` 
 
 ``
 const apiEndpoint = process.env.NEXT_PUBLIC_API_ENDPOINT;
@@ -114,9 +112,11 @@ echo .env.local >> .gitignore
 
 
 # Backend
+
 Deploy Lambda function: Package your Lambda function and deploy it using the AWS CLI or AWS Console.
 Configure API Gateway: Create or update your API Gateway to point to your Lambda function.
-Contributing
+
+# Contributing
 Contributions are welcome! Please fork the repository and submit a pull request with your changes.
 
 # License
