@@ -26,6 +26,21 @@ body {
     rgb(var(--background-start-rgb));
 }
 
+/* Ensure textarea text color and background color */
+textarea {
+  color: rgb(var(--foreground-rgb));
+  background-color: rgb(var(--background-end-rgb));
+}
+
+/* Ensure button styling for visibility and interactivity */
+button {
+  color: white; /* Ensures text is white for visibility */
+  background-color: rgb(59, 130, 246); /* Tailwind color bg-blue-500 */
+  padding: 0.5rem 1rem; /* Tailwind padding px-4 py-2 */
+  border-radius: 0.375rem; /* Tailwind rounded-md */
+  cursor: pointer; /* Ensures button is clickable */
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;

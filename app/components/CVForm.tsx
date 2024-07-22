@@ -2,27 +2,32 @@
 "use client";
 
 import React, { useState } from 'react';
+import { generateSummary } from '../actions/generateSummary'; // Adjust path as necessary
 
 const CVForm: React.FC = () => {
   const [cvText, setCvText] = useState('');
   const [summary, setSummary] = useState('');
+  const [error, setError] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     try {
-      const response = await fetch('https://unnw2h2x8g.execute-api.ap-southeast-2.amazonaws.com/default/GenerateCVSummary', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ cv_text: cvText }),
-      });
-
-      const result = await response.json();
-      setSummary(result);
-    } catch (error) {
+      setError(''); // Clear previous errors
+      const response = await generateSummary(cvText);
+      const jsonResponse = JSON.parse(response);
+      
+      if (jsonResponse && jsonResponse.summary) {
+        setSummary(jsonResponse.summary);
+      } else {
+        throw new Error("Summary field not found in response.");
+      }
+    } catch (error: unknown) {
       console.error('Error generating summary:', error);
+      const errorMessage = error instanceof Error
+        ? `Failed to generate summary. Please check your AWS configuration and try again. Error: ${error.message}`
+        : 'Failed to generate summary. An unknown error occurred.';
+      setError(errorMessage);
     }
   };
 
@@ -41,8 +46,18 @@ const CVForm: React.FC = () => {
       </form>
       {summary && (
         <div className="mt-4 p-4 bg-gray-100 border border-gray-300 rounded-md">
-          <h3 className="font-bold">Summary:</h3>
-          <p>{summary}</p>
+          <h3 className="font-bold text-black">Summary:</h3>
+          <textarea
+            readOnly
+            value={summary}
+            className="w-full h-48 p-2 border border-gray-300 rounded-md resize-none"
+          ></textarea>
+        </div>
+      )}
+      {error && (
+        <div className="mt-4 p-4 bg-red-100 border border-red-300 rounded-md">
+          <h3 className="font-bold text-red-600">Error:</h3>
+          <p>{error}</p>
         </div>
       )}
     </div>
